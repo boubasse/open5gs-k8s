@@ -4,13 +4,13 @@ FROM alpine:3.18
 WORKDIR /
 RUN mkdir open5gs
 WORKDIR /open5gs
-RUN mkdir -p install/bin install/lib install/etc install/tls
+RUN mkdir -p install/bin install/lib install/etc/open5gs install/etc/open5gs/tls
 
 COPY --from=builder /open5gs/install/bin/open5gs-udrd ./install/bin/
 COPY --from=builder /open5gs/install/lib/lib-udr/* ./install/lib/
-COPY --from=builder /open5gs/install/etc/open5gs/tls/udr* ./install/tls/
-COPY --from=builder /open5gs/install/etc/open5gs/tls/ca.crt ./install/tls/
-COPY --from=builder /open5gs/install/etc/open5gs/udr.yaml ./install/etc/
+COPY --from=builder /open5gs/install/etc/open5gs/tls/udr* ./install/etc/open5gs/tls/
+COPY --from=builder /open5gs/install/etc/open5gs/tls/ca.crt ./install/etc/open5gs/tls/
+COPY --from=builder /open5gs/install/etc/open5gs/udr.yaml ./install/etc/open5gs/
 
 RUN ldconfig /open5gs/install/bin/open5gs-udrd
 
