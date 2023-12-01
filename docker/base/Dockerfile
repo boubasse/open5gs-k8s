@@ -1,4 +1,4 @@
-FROM alpine:3.18 as builder
+FROM alpine:3.18
 
 RUN apk update
 RUN apk --no-cache add \
