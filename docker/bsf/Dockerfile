@@ -14,5 +14,5 @@ COPY --from=builder /open5gs/install/etc/open5gs/bsf.yaml ./install/etc/
 
 RUN ldconfig /open5gs/install/bin/open5gs-bsfd
 
-VOLUME [ "/open5gs/isntall/etc" ]
+VOLUME [ "/open5gs/install/etc" ]
 WORKDIR /open5gs/install/bin
