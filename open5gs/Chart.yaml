@@ -1,0 +1,32 @@
+apiVersion: v2
+name: open5gs
+description: A Helm chart to deploy Open5GS
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+- name: mongodb
+  condition: deployMongoDb
+- name: open5gs-amf
+  condition: deployAmf
+- name: open5gs-smf
+  condition: deploySmf
+- name: open5gs-pcf
+  condition: deployPcf
+- name: open5gs-ausf
+  condition: deployAusf
+- name: open5gs-upf
+  condition: deployUpf
+- name: open5gs-scp
+  condition: deployScp
+- name: open5gs-bsf
+  condition: deployBsf
+- name: open5gs-nrf
+  condition: deployNrf
+- name: open5gs-udr
+  condition: deployUdr
+- name: open5gs-udm
+  condition: deployUdm
+- name: open5gs-nssf
+  condition: deployNssf
+- name: open5gs-webui
+  condition: deployWebui
