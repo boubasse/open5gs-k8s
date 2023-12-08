@@ -14,5 +14,7 @@ COPY --from=builder /open5gs/install/etc/open5gs/pcf.yaml ./install/etc/open5gs/
 
 RUN ldconfig /open5gs/install/bin/open5gs-pcfd
 
-VOLUME [ "/open5gs/install/etc" ]
+VOLUME [ "/open5gs/install/etc/open5gs" ]
+VOLUME [ "/open5gs/install/var/log/open5gs" ]
+
 WORKDIR /open5gs/install/bin
