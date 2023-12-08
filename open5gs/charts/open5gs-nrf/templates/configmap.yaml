@@ -1,0 +1,31 @@
+{{- with .Values.nrf }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "open5gs-nrf.fullname" $ }}-configmap
+  labels:
+    app: {{ $.Values.global.name }}
+data:
+  nrf.yaml: |
+    logger:
+      {{- toYaml .logger | nindent 8 }}
+    global:
+      max:
+        ue: {{ $.Values.global.ue.max }} # The number of UE can be increased depending on memory size.
+    #    peer: 64
+
+    nrf:
+      serving:  # 5G roaming requires PLMN in NRF
+        - plmn_id:
+            mcc: 999
+            mnc: 70
+      sbi:
+        server:
+          - address: 0.0.0.0
+            port: {{ .service.port }}
+        client:
+    #      nrf:
+    #        - uri: http://127.0.0.10:7777
+          scp:
+            - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+{{- end }}

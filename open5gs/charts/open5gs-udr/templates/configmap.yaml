@@ -1,0 +1,28 @@
+{{- with .Values.udr }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "open5gs-udr.fullname" $ }}-configmap
+  labels:
+    app: {{ $.Values.global.name }}
+data:
+  udr.yaml: |
+    db_uri: {{ $.Values.global.db_uri }}
+    logger:
+      {{- toYaml .logger | nindent 8 }}
+    global:
+      max:
+        ue: {{ $.Values.global.ue.max }} # The number of UE can be increased depending on memory size.
+    #    peer: 64
+
+    udr:
+      sbi:
+        server:
+          - address: 0.0.0.0
+            port: {{ .service.port }}
+        client:
+    #      nrf:
+    #        - uri: http://127.0.0.10:7777
+          scp:
+            - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+{{- end }}

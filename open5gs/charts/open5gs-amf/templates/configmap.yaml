@@ -1,0 +1,64 @@
+{{- with .Values.amf }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "open5gs-amf.fullname" $ }}-configmap
+  labels:
+    app: {{ $.Values.global.name }}
+data:
+  amf.yaml: |
+    logger:
+      {{- toYaml .logger | nindent 8 }}
+    global:
+      max:
+        ue: {{ $.Values.global.ue.max }} # The number of UE can be increased depending on memory size.
+    #    peer: 64
+
+    amf:
+      sbi:
+        server:
+          - address: 0.0.0.0
+            port: {{ .service.port }}
+        client:
+    #      nrf:
+    #        - uri: http://127.0.0.10:7777
+          scp:
+            - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+      ngap:
+        server:
+          - address: {{ $.Values.global.amf.n2ip }}
+      # metrics:
+      #   server:
+      #     - address: 127.0.0.1
+      #       port: 9090
+      guami:
+        - plmn_id:
+            mcc: 999
+            mnc: 70
+          amf_id:
+            region: 2
+            set: 1
+      tai:
+        - plmn_id:
+            mcc: 999
+            mnc: 70
+          tac: 1
+      plmn_support:
+        - plmn_id:
+            mcc: 999
+            mnc: 70
+          s_nssai:
+            - sst: 1
+      security:
+        integrity_order : [ NIA2, NIA1, NIA0 ]
+        ciphering_order : [ NEA0, NEA1, NEA2 ]
+      network_name:
+        full: Open5GS
+        short: Next
+      amf_name: open5gs-amf0
+      time:
+    #    t3502:
+    #      value: 720   # 12 minutes * 60 = 720 seconds
+        t3512:
+          value: 540    # 9 minutes * 60 = 540 seconds
+{{- end }}

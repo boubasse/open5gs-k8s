@@ -1,72 +1,65 @@
+{{- with .Values.scp }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "open5gs-scp.fullname" . }}
+  name: {{ include "open5gs-scp.fullname" $ }}
   labels:
-    {{- include "open5gs-scp.labels" . | nindent 4 }}
+    {{- include "open5gs-scp.labels" $ | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  {{- if not .autoscaling.enabled }}
+  replicas: {{ .replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "open5gs-scp.selectorLabels" . | nindent 6 }}
+      {{- include "open5gs-scp.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "open5gs-scp.labels" . | nindent 8 }}
-	{{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- include "open5gs-scp.labels" $ | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "open5gs-scp.serviceAccountName" . }}
+        {{- toYaml .imagePullSecrets | nindent 8 }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .podSecurityContext | nindent 8 }}
+      
+      initcontainers:
+      - name: wait-nrf
+        {{- with $.Values.global.initcontainers.curl }}
+        image: {{ .registry }}/{{ .image }}:{{ .tag }}
+        {{- end }}
+        env:
+        - name: URIS
+          value: http://{{ $.Values.global.nrf.service.name }}:{{ $.Values.global.nrf.service.port }}
+        command: ['sh', '-c', 'set -x; for uri in $URIS; do while [ $(curl --insecure --connect-timeout 1 -s -o /dev/null -w "%{http_code}" $uri) -ne 200 ]; do echo waiting for scp; sleep 1; done; done;']
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
+      - name: {{ .name }}
+        securityContext:
+          {{- toYaml .securityContext | nindent 12 }}
+        image: "{{ .image.name }}:{{ .image.tag | default $.Chart.AppVersion }}"
+        imagePullPolicy: {{ .image.pullPolicy }}
+        ports:
+        - name: scp-sbi
+          containerPort: {{ .service.port }}
+        resources:
+          {{- toYaml .resources | nindent 12 }}
+        volumeMounts:
+        - mountPath: {{ .volumeMounts.mountPath }}
+          name: {{ include "open5gs-scp.fullname" $ }}-volume
+        command: ["./open5gs-scpd"]
+        args: ["-c", "../etc/scp.yaml"]
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
+        {{- toYaml .nodeSelector | nindent 8 }}
       affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
+        {{- toYaml .affinity | nindent 8 }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml .tolerations | nindent 8 }}
+
+      volumes:
+      - name: {{ include "open5gs-scp.fullname" $ }}-volume
+        projected:
+          sources:
+          - configMap:
+              name: {{ include "open5gs-scp.fullname" $ }}-configmap
+{{- end }}

@@ -1,98 +1,177 @@
-# Default values for charts.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+## Common config values for each NF
 
-replicaCount: 1
+## Conditions on deployment ##
 
-image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+deployMongoDb: false
+deployAmf: false
+deploySmf: false
+deployPcf: false
+deployAusf: false
+deployUpf: false
+deployScp: false
+deployBsf: false
+deployNrf: false
+deployUdr: false
+deployUdm: false
+deployNssf: false
+deployWebui: true
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+global:
+  name: open5gs
+  basedir: /open5gs/install/etc
+  sbi:
+    port: 80
+  amf:
+    n2ip: 10.1.1.2
+    n2port: 38412
+  nrf:
+    service:
+      name: nrf-sbi
+      type: ClusterIP
+      port: 8000  
+  scp:
+    service:
+      name: scp-sbi
+      type: ClusterIP
+      port: 8000
+  smf:
+    n4ip: 10.100.50.244
+    n4uip: 10.100.50.234
+  upf:
+    n4ip: 10.100.50.241
+    n3ip: 10.1.2.2
+    n6ip: 10.10.10.205
+  ue:
+    max: 1024
+    subnet4: 10.45.0.1/16
+    subnet6: 2001:db8:cafe::1/48
+  
+  initcontainers:
+    curl:
+      registry: irt-xG
+      image: curlprobe
+      tag: latest
+    busybox:
+      image: busybox
+      tag: "1.32.0"
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Automatically mount a ServiceAccount's API credentials?
-  automount: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  
+  mongodb:
+    fullnameOverride: "mongodb"
+    useStatefulSet: true
+    auth:
+      enabled: false
+    persistence:
+      size: 6Gi
+      mountPath: /bitnami/mongodb/data/db/
+    service:
+      name: mongodb
+      type: ClusterIP
+      port: 27017
+  
+  db_uri: mongodb://mongodb/open5gs
 
-podAnnotations: {}
-podLabels: {}
+  ## Networks inside the CN
+  n2network:
+    enabled: true
+    name: n2network
+    type: host-device
+    masterIf: ens20
+    subnetIP: 10.1.1.0
+    cidr: 24
+    gatewayIP: 10.1.1.254
+    excludeIP: 10.1.1.254
+  n3network:
+    enabled: true
+    name: n3network
+    type: host-device
+    masterIf: ens21
+    subnetIP: 10.1.2.0
+    cidr: 24
+    gatewayIP: 10.1.2.254
+    excludeIP: 10.1.2.254
+  n4network:
+    enabled: true
+    name: n4network
+    type: ipvlan
+    masterIf: ens18
+    subnetIP: 10.100.50.240
+    cidr: 29
+    gatewayIP: 10.100.50.246
+    excludeIP: 10.100.50.246
+  n4unetwork:
+    enabled: true
+    name: n4unetwork
+    type: ipvlan
+    masterIf: ens18
+    subnetIP: 10.100.50.232
+    cidr: 29
+    gatewayIP: 10.100.50.238
+    excludeIP: 10.100.50.238
+  n6network:
+    enabled: true
+    name: n6network
+    type: ipvlan
+    masterIf: ens18
+    subnetIP: 10.10.10.0
+    cidr: 24
+    gatewayIP: 10.10.10.254
+    excludeIP: 10.100.10.254
+  n9network:
+    enabled: true
+    name: n9network
+    type: ipvlan
+    masterIf: ens18
+    subnetIP: 10.100.50.224
+    cidr: 29
+    gatewayIP: 10.100.50.230
+    excludeIP: 10.100.50.230
 
-podSecurityContext: {}
-  # fsGroup: 2000
+  
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
-service:
-  type: ClusterIP
-  port: 80
 
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
-# Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
 
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
 
-nodeSelector: {}
 
-tolerations: []
 
-affinity: {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mongodb:
+  fullnameOverride: "mongodb"
+  useStatefulSet: true
+  auth:
+    enabled: false
+  persistence:
+    size: 6Gi
+    mountPath: /bitnami/mongodb/data/db/
+  service:
+    name: mongodb
+    type: ClusterIP
+    port: 27017

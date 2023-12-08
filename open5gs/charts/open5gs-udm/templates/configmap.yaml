@@ -1,0 +1,46 @@
+{{- with .Values.udm }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "open5gs-udm.fullname" $ }}-configmap
+  labels:
+    app: {{ $.Values.global.name }}
+data:
+  udm.yaml: |
+    logger:
+      {{- toYaml .logger | nindent 8 }}
+    global:
+      max:
+        ue: {{ $.Values.global.ue.max }} # The number of UE can be increased depending on memory size.
+    #    peer: 64
+
+    udm:
+      hnet:
+        - id: 1
+          scheme: 1
+          key: {{ $.Values.global.basedir }}/hnet/curve25519-1.key
+        - id: 2
+          scheme: 2
+          key: {{ $.Values.global.basedir }}/hnet/secp256r1-2.key
+        - id: 3
+          scheme: 1
+          key: {{ $.Values.global.basedir }}/hnet/curve25519-3.key
+        - id: 4
+          scheme: 2
+          key: {{ $.Values.global.basedir }}/hnet/secp256r1-4.key
+        - id: 5
+          scheme: 1
+          key: {{ $.Values.global.basedir }}/hnet/curve25519-5.key
+        - id: 6
+          scheme: 2
+          key: {{ $.Values.global.basedir }}/hnet/secp256r1-6.key
+      sbi:
+        server:
+          - address: 0.0.0.0
+            port: {{ .service.port }}
+        client:
+    #      nrf:
+    #        - uri: http://127.0.0.10:7777
+          scp:
+            - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+{{- end }}

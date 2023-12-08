@@ -1,72 +1,59 @@
+{{- with .Values.webui }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "open5gs-webui.fullname" . }}
+  name: {{ include "open5gs-webui.fullname" $ }}
   labels:
-    {{- include "open5gs-webui.labels" . | nindent 4 }}
+    {{- include "open5gs-webui.labels" $ | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  {{- if not .autoscaling.enabled }}
+  replicas: {{ .replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "open5gs-webui.selectorLabels" . | nindent 6 }}
+      {{- include "open5gs-webui.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "open5gs-webui.labels" . | nindent 8 }}
-	{{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- include "open5gs-webui.labels" $ | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "open5gs-webui.serviceAccountName" . }}
+        {{- toYaml .imagePullSecrets | nindent 8 }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .podSecurityContext | nindent 8 }}
+      
+      initcontainers:
+      - name: wait-mongo
+        {{- with $.Values.global.initcontainers.busybox }}
+        image: {{ .registry }}/{{ .image }}:{{ .tag }}
+        {{- end }}
+        env:
+        - name: MONGO
+          value: {{ $.Values.global.mongodb.service.name }}:{{ $.Values.global.mongodb.service.port }}
+        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the MongoDB; sleep 2; done;"]
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
+      - name: {{ .name }}
+        securityContext:
+          {{- toYaml .securityContext | nindent 12 }}
+        image: "{{ .image.name }}:{{ .image.tag | default $.Chart.AppVersion }}"
+        imagePullPolicy: {{ .image.pullPolicy }}
+        env:
+        - name: PORT
+          value: {{ .service.port }} 
+        - name: DB_URI
+          value: {{ $.Values.global.db_uri }} 
+        ports:
+        - name: webui-svc
+          containerPort: {{ .service.port }}
+        resources:
+          {{- toYaml .resources | nindent 12 }}
+        command: ["npm run dev"]
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
+        {{- toYaml .nodeSelector | nindent 8 }}
       affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
+        {{- toYaml .affinity | nindent 8 }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml .tolerations | nindent 8 }}
+{{- end }}

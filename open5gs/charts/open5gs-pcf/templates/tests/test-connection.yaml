@@ -1,9 +1,10 @@
+{{- with .Values.pcf }}
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "open5gs-pcf.fullname" . }}-test-connection"
+  name: "{{ include "open5gs-pcf.fullname" $ }}-test-connection"
   labels:
-    {{- include "open5gs-pcf.labels" . | nindent 4 }}
+    {{- include "open5gs-pcf.labels" $ | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
@@ -11,5 +12,6 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "open5gs-pcf.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ .service.name }}:{{ .service.port }}']
   restartPolicy: Never
+{{- end }}

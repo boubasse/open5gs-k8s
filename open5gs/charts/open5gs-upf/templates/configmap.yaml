@@ -1,0 +1,44 @@
+{{- with .Values.upf }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "open5gs-upf.fullname" $ }}-configmap
+  labels:
+    app: {{ $.Values.global.name }}
+data:
+  upf.yaml: |
+    logger:
+      {{- toYaml .logger | nindent 8 }}
+    global:
+      max:
+        ue: {{ $.Values.global.ue.max }} # The number of UE can be increased depending on memory size.
+    #    peer: 64
+
+    upf:
+      pfcp:
+        server:
+          - address: {{ $.Values.global.upf.n4ip }}
+        # client:
+        #   smf:
+        #     - address: {{ $.Values.global.upf.n4ip }}
+      gtpu:
+        server:
+          - address: {{ $.Values.global.upf.n3ip }}
+      # metrics:
+      #   server:
+      #     - address: 127.0.0.7
+      #       port: 9090
+      session:
+        - subnet: {{ $.Values.global.ue.subnet4 }}
+        - subnet: {{ $.Values.global.ue.subnet6 }}
+  
+  app.sh: |
+    #!/bin/sh
+    ip tuntap add name ogstun mode tun
+    ip addr add 60.60.0.1/16 dev ogstun
+    ip link set ogstun up
+    echo "nameserver 172.16.0.1" | tee -a /etc/resolv.conf
+
+    /open5gs/intall/bin/open5gs-upfd -c {{ .volumeMounts.mountPath }}/upf.yaml
+
+{{- end }}

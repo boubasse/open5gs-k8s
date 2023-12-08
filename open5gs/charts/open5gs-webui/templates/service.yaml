@@ -1,15 +1,18 @@
+{{- with .Values.webui}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "open5gs-webui.fullname" . }}
+  name: {{ include "open5gs-webui.fullname" $ }}-sbi
   labels:
-    {{- include "open5gs-webui.labels" . | nindent 4 }}
+    {{- include "open5gs-webui.labels" $ | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: {{ .service.port }}
+      targetPort: {{ .service.port }}
+      nodePort: {{ .service.nodePort }}
       protocol: TCP
       name: http
   selector:
-    {{- include "open5gs-webui.selectorLabels" . | nindent 4 }}
+    {{- include "open5gs-webui.selectorLabels" $ | nindent 4 }}
+{{- end}}

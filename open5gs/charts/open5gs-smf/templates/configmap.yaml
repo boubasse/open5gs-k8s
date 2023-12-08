@@ -1,0 +1,55 @@
+{{- with .Values.smf }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "open5gs-smf.fullname" $ }}-configmap
+  labels:
+    app: {{ $.Values.global.name }}
+data:
+  smf.yaml: |
+    logger:
+      {{- toYaml .logger | nindent 8 }}
+    global:
+      max:
+        ue: {{ $.Values.global.ue.max }} # The number of UE can be increased depending on memory size.
+    #    peer: 64
+
+    smf:
+      sbi:
+        server:
+          - address: 0.0.0.0
+            port: {{ .service.port }}
+        client:
+    #      nrf:
+    #        - uri: http://127.0.0.10:7777
+          scp:
+            - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+      pfcp:
+        server:
+          - address: {{ $.Values.global.smf.n4ip }}
+        client:
+          upf:
+            - address: {{ $.Values.global.upf.n4ip }}
+      gtpc:
+        server:
+          - address: {{ $.Values.global.smf.n4uip }}
+      gtpu:
+        server:
+          - address: {{ $.Values.global.smf.n4uip }}
+      metrics:
+        server:
+          - address: 127.0.0.4
+            port: 9090
+      session:
+        - subnet: {{ $.Values.global.ue.subnet4 }}
+        - subnet: {{ $.Values.global.ue.subnet6 }}
+      dns:
+        - 172.16.0.1
+      mtu: 1400
+    #  p-cscf:
+    #    - 127.0.0.1
+    #    - ::1
+    #  ctf:
+    #    enabled: auto   # auto(default)|yes|no
+      freeDiameter: {{ $.Values.global.basedir }}/freeDiameter/smf.conf
+{{- end }}
