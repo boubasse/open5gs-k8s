@@ -25,10 +25,10 @@ spec:
               "ips": [ "{{ .n4ip }}/{{ .n4network.cidr }}" ]
             },
             { "name": "{{ .n6network.name }}-{{ include "open5gs-upf.fullname" $ }}",
-              "default-route": ["{{ .n6network.gatewayIP }}"],
               "interface": "n6",
               "ips": [ "{{ .n6ip }}/{{ .n6network.cidr }}" ]
             }]'
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
       labels:
         {{- include "open5gs-upf.labels" $ | nindent 8 }}
     spec:
@@ -48,6 +48,7 @@ spec:
           containerPort: 8805
         - name: n3
           containerPort: 2152
+        command: ["{{ .volumeMounts.mountPath }}/app.sh"]
         resources:
           {{- toYaml .resources | nindent 12 }}
         volumeMounts:
@@ -70,9 +71,9 @@ spec:
               name: {{ include "open5gs-upf.fullname" $ }}-configmap
               items:
               - key: upf.yaml
-                value: upf.yaml
+                path: upf.yaml
               - key: app.sh
-                value: app.sh
+                path: app.sh
                 mode: 0777
 
 {{- end }}

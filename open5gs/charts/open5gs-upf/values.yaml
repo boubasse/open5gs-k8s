@@ -14,7 +14,7 @@ upf:
   
   n4ip: 10.100.50.241
   n3ip: 10.1.2.3
-  n6ip: 10.10.10.208
+  n6ip: 10.10.30.208
 
   ue:
     max: 1024
@@ -44,10 +44,10 @@ upf:
     name: n6network
     type: host-device
     masterIf: ens19
-    subnetIP: 10.10.10.0
+    subnetIP: 10.10.30.0
     cidr: 24
-    gatewayIP: 10.10.10.254
-    excludeIP: 10.100.10.254
+    gatewayIP: 10.10.30.254
+    excludeIP: 10.10.30.254
 
   podAnnotations: {}
   podLabels: {}
