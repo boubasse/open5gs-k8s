@@ -29,7 +29,7 @@ global:
     service:
       name: nrf-sbi
       type: ClusterIP
-      port: 8000  
+      port: 8000
   scp:
     service:
       name: scp-sbi
@@ -46,7 +46,7 @@ global:
     max: 1024
     subnet4: 10.45.0.1/16
     subnet6: 2001:db8:cafe::1/48
-  
+
   initcontainers:
     curl:
       registry: towards5gs
@@ -56,7 +56,7 @@ global:
       image: busybox
       tag: "1.32.0"
 
-  
+
   mongodb:
     fullnameOverride: "mongodb"
     useStatefulSet: true
@@ -69,7 +69,7 @@ global:
       name: mongodb
       type: ClusterIP
       port: 27017
-  
+
   db_uri: mongodb://mongodb/open5gs
 
   ## Networks inside the CN
@@ -114,10 +114,10 @@ global:
     name: n6network
     type: ipvlan
     masterIf: ens18
-    subnetIP: 10.10.10.0
+    subnetIP: 10.10.30.0
     cidr: 24
-    gatewayIP: 10.10.10.254
-    excludeIP: 10.100.10.254
+    gatewayIP: 10.10.30.254
+    excludeIP: 10.100.30.254
   n9network:
     enabled: true
     name: n9network
