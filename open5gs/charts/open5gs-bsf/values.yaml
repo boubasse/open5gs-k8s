@@ -6,9 +6,10 @@ bsf:
   name: bsf
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-bsf
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: bsf
 
   podAnnotations: {}
   podLabels: {}

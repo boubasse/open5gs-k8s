@@ -6,9 +6,9 @@ nssf:
   name: nssf
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-nssf
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: nssf
 
   podAnnotations: {}
   podLabels: {}

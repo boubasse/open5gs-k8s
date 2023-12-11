@@ -6,9 +6,10 @@ ausf:
   name: ausf
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-ausf
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: ausf
 
   podAnnotations: {}
   podLabels: {}

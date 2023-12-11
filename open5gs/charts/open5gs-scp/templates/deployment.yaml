@@ -35,7 +35,7 @@ spec:
       - name: {{ .name }}
         securityContext:
           {{- toYaml .securityContext | nindent 12 }}
-        image: "{{ .image.name }}:{{ .image.tag | default $.Chart.AppVersion }}"
+        image: "{{ .image.registry }}/{{ .image.name }}:{{ .image.tag | default $.Chart.AppVersion }}"
         imagePullPolicy: {{ .image.pullPolicy }}
         ports:
         - name: scp-sbi

@@ -6,9 +6,10 @@ scp:
   name: scp
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-scp
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: scp
 
   podAnnotations: {}
   podLabels: {}

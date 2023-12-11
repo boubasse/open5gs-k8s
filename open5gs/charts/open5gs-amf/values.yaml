@@ -6,9 +6,10 @@ amf:
   name: amf
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-amf
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: amf
 
   podAnnotations: {}
   podLabels: {}

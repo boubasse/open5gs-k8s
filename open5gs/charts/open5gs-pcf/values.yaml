@@ -6,9 +6,10 @@ pcf:
   name: pcf
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-pcf
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: pcf
 
   podAnnotations: {}
   podLabels: {}

@@ -6,9 +6,10 @@ webui:
   name: webui
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-webui
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: webui
 
   podAnnotations: {}
   podLabels: {}

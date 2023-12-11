@@ -6,9 +6,10 @@ nrf:
   name: nrf
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-nrf
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: nrf
 
   podAnnotations: {}
   podLabels: {}

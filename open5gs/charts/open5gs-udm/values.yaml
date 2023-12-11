@@ -6,9 +6,10 @@ udm:
   name: udm
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-udm
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: udm
 
   podAnnotations: {}
   podLabels: {}

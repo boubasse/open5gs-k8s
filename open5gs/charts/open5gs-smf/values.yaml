@@ -6,9 +6,10 @@ smf:
   name: smf
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-smf
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: smf
 
   podAnnotations: {}
   podLabels: {}
