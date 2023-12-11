@@ -16,18 +16,18 @@ spec:
     metadata:
       annotations:
         k8s.v1.cni.cncf.io/networks: '[
-            { "name": "{{ $.Values.global.n3network.name }}-{{ include "open5gs-upf.fullname" $ }}",
+            { "name": "{{ .n3network.name }}-{{ include "open5gs-upf.fullname" $ }}",
               "interface": "n3",
-              "ips": [ "{{ $.Values.global.upf.n3ip }}/{{ $.Values.global.n3network.cidr }}" ]
+              "ips": [ "{{ .n3ip }}/{{ .n3network.cidr }}" ]
             },
-            { "name": "{{ $.Values.global.n4network.name }}-{{ include "open5gs-upf.fullname" $ }}",
+            { "name": "{{ .n4network.name }}-{{ include "open5gs-upf.fullname" $ }}",
               "interface": "n4",
-              "ips": [ "{{ $.Values.global.upf.n4ip }}/{{ $.Values.global.n4network.cidr }}" ]
+              "ips": [ "{{ .n4ip }}/{{ .n4network.cidr }}" ]
             },
-            { "name": "{{ $.Values.global.n6network.name }}-{{ include "open5gs-upf.fullname" $ }}",
-              "default-route": ["{{ $.Values.global.n6network.gatewayIP }}"],
+            { "name": "{{ .n6network.name }}-{{ include "open5gs-upf.fullname" $ }}",
+              "default-route": ["{{ .n6network.gatewayIP }}"],
               "interface": "n6",
-              "ips": [ "{{ $.Values.global.upf.n6ip }}/{{ $.Values.global.n6network.cidr }}" ]
+              "ips": [ "{{ .n6ip }}/{{ .n6network.cidr }}" ]
             }]'
       labels:
         {{- include "open5gs-upf.labels" $ | nindent 8 }}
@@ -41,7 +41,7 @@ spec:
       - name: {{ .name }}
         securityContext:
           {{- toYaml .securityContext | nindent 12 }}
-        image: "{{ .image.name }}:{{ .image.tag | default $.Chart.AppVersion }}"
+        image: "{{ .image.registry }}/{{ .image.name }}:{{ .image.tag | default $.Chart.AppVersion }}"
         imagePullPolicy: {{ .image.pullPolicy }}
         ports:
         - name: n4

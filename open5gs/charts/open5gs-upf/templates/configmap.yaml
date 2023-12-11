@@ -4,33 +4,33 @@ kind: ConfigMap
 metadata:
   name: {{ include "open5gs-upf.fullname" $ }}-configmap
   labels:
-    app: {{ $.Values.global.name }}
+    app: {{ .app }}
 data:
   upf.yaml: |
     logger:
       {{- toYaml .logger | nindent 8 }}
     global:
       max:
-        ue: {{ $.Values.global.ue.max }} # The number of UE can be increased depending on memory size.
+        ue: {{ .ue.max }} # The number of UE can be increased depending on memory size.
     #    peer: 64
 
     upf:
       pfcp:
         server:
-          - address: {{ $.Values.global.upf.n4ip }}
+          - address: {{ .n4ip }}
         # client:
         #   smf:
-        #     - address: {{ $.Values.global.upf.n4ip }}
+        #     - address: {{ .n4ip }}
       gtpu:
         server:
-          - address: {{ $.Values.global.upf.n3ip }}
+          - address: {{ .n3ip }}
       # metrics:
       #   server:
       #     - address: 127.0.0.7
       #       port: 9090
       session:
-        - subnet: {{ $.Values.global.ue.subnet4 }}
-        - subnet: {{ $.Values.global.ue.subnet6 }}
+        - subnet: {{ .ue.subnet4 }}
+        - subnet: {{ .ue.subnet6 }}
   
   app.sh: |
     #!/bin/sh

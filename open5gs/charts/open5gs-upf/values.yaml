@@ -4,11 +4,22 @@ fullnameOverride: ""
 
 upf:
   name: upf
+  app: open5gs
   replicaCount: 1
   image:
-    name: irt-xG/open5gs-upf
+    registry: boubasse
+    name: open5gs
     pullPolicy: Always
-    tag: latest
+    tag: upf
+  
+  n4ip: 10.100.50.241
+  n3ip: 10.1.2.3
+  n6ip: 10.10.10.208
+
+  ue:
+    max: 1024
+    subnet4: 60.60.0.1/16
+    subnet6: 2001:db8:cafe::1/48
   
   n3network:
     enabled: true
