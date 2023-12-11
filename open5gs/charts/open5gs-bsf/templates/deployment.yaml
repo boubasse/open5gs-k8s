@@ -14,6 +14,8 @@ spec:
       {{- include "open5gs-bsf.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
       labels:
         {{- include "open5gs-bsf.labels" $ | nindent 8 }}
     spec:

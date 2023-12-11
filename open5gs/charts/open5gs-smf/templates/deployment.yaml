@@ -24,6 +24,7 @@ spec:
               "interface": "n4u",
               "ips": [ "{{ $.Values.global.smf.n4uip }}/{{ $.Values.global.n4unetwork.cidr }}" ]
             }]'
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
       labels:
         {{- include "open5gs-smf.labels" $ | nindent 8 }}
     spec:

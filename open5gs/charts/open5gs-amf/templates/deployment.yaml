@@ -20,6 +20,7 @@ spec:
               "interface": "n2",
               "ips": [ "{{ $.Values.global.amf.n2ip }}/{{ $.Values.global.n2network.cidr }}" ]
             }]'
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
       labels:
         {{- include "open5gs-amf.labels" $ | nindent 8 }}
     spec:
