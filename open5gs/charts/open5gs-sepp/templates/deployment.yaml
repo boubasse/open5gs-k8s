@@ -1,0 +1,65 @@
+{{- with .Values.sepp }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "open5gs-sepp.fullname" $ }}
+  labels:
+    {{- include "open5gs-sepp.labels" $ | nindent 4 }}
+spec:
+  {{- if not .autoscaling.enabled }}
+  replicas: {{ .replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "open5gs-sepp.selectorLabels" $ | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "open5gs-sepp.labels" $ | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        {{- toYaml .imagePullSecrets | nindent 8 }}
+      securityContext:
+        {{- toYaml .podSecurityContext | nindent 8 }}
+      
+      initcontainers:
+      - name: wait-scp
+        {{- with $.Values.global.initcontainers.curl }}
+        image: {{ .registry }}/{{ .image }}:{{ .tag }}
+        {{- end }}
+        env:
+        - name: URIS
+          value: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+        command: ['sh', '-c', 'set -x; for uri in $URIS; do while [ $(curl --insecure --connect-timeout 1 -s -o /dev/null -w "%{http_code}" $uri) -ne 200 ]; do echo waiting for scp; sleep 1; done; done;']
+      containers:
+      - name: {{ .name }}
+        securityContext:
+          {{- toYaml .securityContext | nindent 12 }}
+        image: "{{ .image.registry }}/{{ .image.name }}:{{ .image.tag | default $.Chart.AppVersion }}"
+        imagePullPolicy: {{ .image.pullPolicy }}
+        ports:
+        - name: sepp-sbi
+          containerPort: {{ .service.port }}
+        resources:
+          {{- toYaml .resources | nindent 12 }}
+        volumeMounts:
+        - mountPath: {{ .volumeMounts.mountPath }}
+          name: {{ include "open5gs-sepp.fullname" $ }}-volume
+        command: ["./open5gs-seppd"]
+        args: ["-c", "../etc/sepp.yaml"]
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      nodeSelector:
+        {{- toYaml .nodeSelector | nindent 8 }}
+      affinity:
+        {{- toYaml .affinity | nindent 8 }}
+      tolerations:
+        {{- toYaml .tolerations | nindent 8 }}
+
+      volumes:
+      - name: {{ include "open5gs-sepp.fullname" $ }}-volume
+        projected:
+          sources:
+          - configMap:
+              name: {{ include "open5gs-sepp.fullname" $ }}-configmap
+{{- end }}

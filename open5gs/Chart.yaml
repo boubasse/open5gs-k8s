@@ -18,6 +18,8 @@ dependencies:
   condition: deployUpf
 - name: open5gs-scp
   condition: deployScp
+- name: open5gs-sepp
+  condition: deploySepp
 - name: open5gs-bsf
   condition: deployBsf
 - name: open5gs-nrf

@@ -4,16 +4,17 @@
 
 deployMongoDb: true
 deployAmf: true
-deploySmf: true
-deployPcf: true
 deployAusf: true
-deployUpf: false
-deployScp: true
 deployBsf: true
 deployNrf: true
-deployUdr: true
-deployUdm: true
 deployNssf: true
+deployPcf: true
+deployScp: true
+deploySepp: false
+deploySmf: true
+deployUdm: true
+deployUdr: true
+deployUpf: false
 deployWebui: true
 
 global:

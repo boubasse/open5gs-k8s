@@ -1,0 +1,17 @@
+{{- with .Values.sepp}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "open5gs-sepp.fullname" $ }}-sbi
+  labels:
+    {{- include "open5gs-sepp.labels" $ | nindent 4 }}
+spec:
+  type: {{ .service.type }}
+  ports:
+    - port: {{ .service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "open5gs-sepp.selectorLabels" $ | nindent 4 }}
+{{- end}}
