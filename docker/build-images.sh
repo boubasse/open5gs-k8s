@@ -7,11 +7,11 @@ then
 fi
 
 for image_dir in */
-if [$image_dir != "base"]
-then
     do
-        echo "Building ${image_dir} ..."
-        docker build -q -t open5gs-${image}:latest $image_dir/
-        echo "Image has been successfully built"
+        if [ $image_dir != "base" ]
+        then
+            echo "Building ${image_dir} ..."
+            docker build -q -t open5gs-${image}:latest $image_dir/
+            echo "Image has been successfully built"
+        fi
     done
-fi
