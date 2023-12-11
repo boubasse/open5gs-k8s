@@ -1,6 +1,9 @@
 FROM open5gs-base AS builder
 FROM alpine:3.18
 
+RUN apk update
+RUN apk add --no-cache iproute2 iptables ip6tables
+
 WORKDIR /
 RUN mkdir open5gs
 WORKDIR /open5gs
