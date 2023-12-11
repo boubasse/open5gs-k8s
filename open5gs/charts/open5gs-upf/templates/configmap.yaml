@@ -35,7 +35,7 @@ data:
   app.sh: |
     #!/bin/sh
     ip tuntap add name ogstun mode tun
-    ip addr add 60.60.0.1/16 dev ogstun
+    ip addr add {{ .ue.subnet4 }} dev ogstun
     ip link set ogstun up
     echo "nameserver 172.16.0.1" | tee -a /etc/resolv.conf
 

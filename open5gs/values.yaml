@@ -44,7 +44,7 @@ global:
     n6ip: 10.10.10.208
   ue:
     max: 1024
-    subnet4: 60.60.0.1/16
+    subnet4: 10.45.0.1/16
     subnet6: 2001:db8:cafe::1/48
   
   initcontainers:
