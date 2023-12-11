@@ -11,7 +11,7 @@ COPY --from=builder /open5gs/install/lib/lib-smf/* ./install/lib/
 COPY --from=builder /open5gs/install/etc/open5gs/tls/smf* ./install/etc/tls/
 COPY --from=builder /open5gs/install/etc/open5gs/tls/ca.crt ./install/etc/tls/
 COPY --from=builder /open5gs/install/etc/open5gs/smf.yaml ./install/etc/
-COPY --from=builder /open5gs/install/etc/freeDiameter/smf.yaml ./install/etc/freeDiameter/
+COPY --from=builder /open5gs/install/etc/freeDiameter/smf.conf ./install/etc/freeDiameter/
 
 RUN ldconfig /open5gs/install/bin/open5gs-smfd
 
