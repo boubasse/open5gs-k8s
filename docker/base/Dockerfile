@@ -19,7 +19,7 @@ RUN meson build --prefix=`pwd`/install && \
 
 WORKDIR /open5gs/install
 
-ENV NFS amf bsf nssf udm upf ausf nrf pcf smf udr scp
+ENV NFS amf bsf nssf udm upf ausf nrf pcf smf udr scp sepp
 
 RUN for NF in ${NFS}; \
     do mkdir -p lib/lib-${NF}; \
