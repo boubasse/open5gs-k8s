@@ -4,7 +4,7 @@ FROM alpine:3.18
 WORKDIR /
 RUN mkdir open5gs
 WORKDIR /open5gs
-RUN mkdir -p install/bin install/lib install/etc install/etc/tls install/etc/freeDiameter
+RUN mkdir -p install/bin install/lib install/etc install/etc/tls install/log install/etc/freeDiameter
 
 COPY --from=builder /open5gs/install/bin/open5gs-smfd ./install/bin/
 COPY --from=builder /open5gs/install/lib/lib-smf/* ./install/lib/
@@ -15,5 +15,5 @@ COPY --from=builder /open5gs/install/etc/freeDiameter/smf.conf ./install/etc/fre
 
 RUN ldconfig /open5gs/install/bin/open5gs-smfd
 
-VOLUME [ "/open5gs/install/etc" ]
+VOLUME [ "/open5gs/install/etc", "/open5gs/install/log" ]
 WORKDIR /open5gs/install/bin
