@@ -24,7 +24,7 @@ spec:
       securityContext:
         {{- toYaml .podSecurityContext | nindent 8 }}
       
-      initcontainers:
+      initContainers:
       - name: wait-scp
         {{- with $.Values.global.initcontainers.curl }}
         image: {{ .registry }}/{{ .image }}:{{ .tag }}
