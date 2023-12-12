@@ -18,7 +18,7 @@ scp:
   service:
     name: scp-sbi
     type: ClusterIP
-    port: 80
+    port: 8000
   ingress:
     enabled: false
     className: ""
