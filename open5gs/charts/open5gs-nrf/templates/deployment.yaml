@@ -26,8 +26,8 @@ spec:
       
       initContainers:
       - name: wait-mongo
-        {{- with $.Values.global.initcontainers.curl }}
-        image: {{ .registry }}/{{ .image }}:{{ .tag }}
+        {{- with $.Values.global.initcontainers.busybox }}
+        image: {{ .image }}:{{ .tag }}
         {{- end }}
         env:
         - name: MONGO
