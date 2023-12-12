@@ -55,5 +55,5 @@ amf:
     mountPath: "/open5gs/install/etc/"
   
   logger:
-    file: /open5gs/install/etc/amf.log
+    file: /open5gs/install/log/amf.log
     level: info

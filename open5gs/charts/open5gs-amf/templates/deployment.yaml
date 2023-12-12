@@ -53,8 +53,10 @@ spec:
         resources:
           {{- toYaml .resources | nindent 12 }}
         volumeMounts:
-        - mountPath: {{ .volumeMounts.mountPath }}
-          name: {{ include "open5gs-amf.fullname" $ }}-volume
+        - mountPath: {{ .volumeMounts.confPath }}
+          name: {{ include "open5gs-amf.fullname" $ }}-conf-volume
+        - mountPath: {{ .volumeMounts.logPath }}
+          name: {{ include "open5gs-amf.fullname" $ }}-log-volume
         command: ["./open5gs-amfd"]
         args: ["-c", "../etc/amf.yaml"] 
       dnsPolicy: ClusterFirst
@@ -67,7 +69,9 @@ spec:
         {{- toYaml .tolerations | nindent 8 }}
 
       volumes:
-      - name: {{ include "open5gs-amf.fullname" $ }}-volume
+      - name: {{ include "open5gs-amf.fullname" $ }}-log-volume
+        emptyDir: {}
+      - name: {{ include "open5gs-amf.fullname" $ }}-conf-volume
         projected:
           sources:
           - configMap:

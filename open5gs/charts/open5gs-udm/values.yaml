@@ -55,5 +55,5 @@ udm:
     mountPath: "/open5gs/install/etc/open5gs"
   
   logger:
-    file: /open5gs/install/etc/udm.log
+    file: /open5gs/install/log/udm.log
     level: info

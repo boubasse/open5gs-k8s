@@ -45,8 +45,10 @@ spec:
         resources:
           {{- toYaml .resources | nindent 12 }}
         volumeMounts:
-        - mountPath: {{ .volumeMounts.mountPath }}
-          name: {{ include "open5gs-scp.fullname" $ }}-volume
+        - mountPath: {{ .volumeMounts.confPath }}
+          name: {{ include "open5gs-scp.fullname" $ }}-conf-volume
+        - mountPath: {{ .volumeMounts.logPath }}
+          name: {{ include "open5gs-scp.fullname" $ }}-log-volume
         command: ["./open5gs-scpd"]
         args: ["-c", "../etc/scp.yaml"]
       dnsPolicy: ClusterFirst
@@ -59,7 +61,9 @@ spec:
         {{- toYaml .tolerations | nindent 8 }}
 
       volumes:
-      - name: {{ include "open5gs-scp.fullname" $ }}-volume
+      - name: {{ include "open5gs-scp.fullname" $ }}-log-volume
+        emptyDir: {}
+      - name: {{ include "open5gs-scp.fullname" $ }}-conf-volume
         projected:
           sources:
           - configMap:

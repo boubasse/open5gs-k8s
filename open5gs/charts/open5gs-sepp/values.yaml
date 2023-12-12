@@ -55,5 +55,5 @@ sepp:
     mountPath: "/open5gs/install/etc/"
   
   logger:
-    file: /open5gs/install/etc/sepp.log
+    file: /open5gs/install/log/sepp.log
     level: info

@@ -51,8 +51,9 @@ nssf:
     # targetMemoryUtilizationPercentage: 80
 
   volumeMounts:
-    mountPath: "/open5gs/install/etc"
+    confPath: "/open5gs/install/etc"
+    logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/etc/nssf.log
+    file: /open5gs/install/log/nssf.log
     level: info
