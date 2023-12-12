@@ -14,8 +14,6 @@ spec:
       {{- include "open5gs-webui.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
       labels:
         {{- include "open5gs-webui.labels" $ | nindent 8 }}
     spec:
