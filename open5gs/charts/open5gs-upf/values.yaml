@@ -18,7 +18,8 @@ upf:
 
   ue:
     max: 1024
-    subnet4: 60.60.0.1/16
+    subnet4: 10.45.0.1/16
+    tun4: 10.45.0.0/16
     subnet6: 2001:db8:cafe::1/48
   
   n3network:
@@ -52,7 +53,10 @@ upf:
   podAnnotations: {}
   podLabels: {}
   podSecurityContext: {}
-  securityContext: {}
+  securityContext:
+    privileged: true
+    capabilities:
+        add: ["NET_ADMIN", "NET_RAW"]
   service:
     type: ClusterIP
     port: 80
@@ -89,8 +93,9 @@ upf:
     # targetMemoryUtilizationPercentage: 80
 
   volumeMounts:
-    mountPath: "/open5gs/install/etc"
+    confPath: "/open5gs/install/etc"
+    logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/etc/upf.log
+    file: /open5gs/install/log/upf.log
     level: info

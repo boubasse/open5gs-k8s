@@ -37,11 +37,10 @@ data:
     ip tuntap add name ogstun mode tun
     ip addr add {{ .ue.subnet4 }} dev ogstun
     ip link set ogstun up
-    iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
-    ip6tables -t nat -A POSTROUTING -s 2001:db8:cafe::/48 ! -o ogstun -j MASQUERADE
+    iptables -t nat -A POSTROUTING -s {{ .ue.tun4 }} ! -o ogstun -j MASQUERADE
     
     echo "nameserver 172.16.0.1" | tee -a /etc/resolv.conf
 
-    /open5gs/install/bin/open5gs-upfd -c {{ .volumeMounts.mountPath }}/upf.yaml
+    /open5gs/install/bin/open5gs-upfd -c {{ .volumeMounts.confPath }}/upf.yaml
 
 {{- end }}
