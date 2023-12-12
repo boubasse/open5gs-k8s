@@ -52,7 +52,8 @@ udm:
     # targetMemoryUtilizationPercentage: 80
 
   volumeMounts:
-    mountPath: "/open5gs/install/etc/open5gs"
+    confPath: "/open5gs/install/etc"
+    logPath: "/open5gs/install/log"
   
   logger:
     file: /open5gs/install/log/udm.log

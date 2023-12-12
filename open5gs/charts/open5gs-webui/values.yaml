@@ -17,7 +17,7 @@ webui:
   securityContext: {}
   service:
     name: webui-svc
-    type: ClusterIP
+    type: NodePort
     port: 8000
     nodePort: 30500
   ingress:

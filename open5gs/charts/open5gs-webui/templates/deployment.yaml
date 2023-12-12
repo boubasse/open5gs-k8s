@@ -39,7 +39,7 @@ spec:
         imagePullPolicy: {{ .image.pullPolicy }}
         env:
         - name: PORT
-          value: {{ .service.port }} 
+          value: "{{ .service.port }}"
         - name: DB_URI
           value: {{ $.Values.global.db_uri }} 
         ports:

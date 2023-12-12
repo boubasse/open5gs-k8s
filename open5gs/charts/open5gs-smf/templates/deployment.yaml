@@ -57,7 +57,7 @@ spec:
           containerPort: 2152
         - name: n4c
           containerPort: 2123
-        - name: frDi
+        - name: frdi
           containerPort: 3868
         resources:
           {{- toYaml .resources | nindent 12 }}
