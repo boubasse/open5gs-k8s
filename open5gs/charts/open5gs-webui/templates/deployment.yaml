@@ -30,7 +30,7 @@ spec:
         env:
         - name: MONGO
           value: {{ $.Values.global.mongodb.service.name }}:{{ $.Values.global.mongodb.service.port }}
-        command: ["sh", "-c", "until nc -z $DEPENDENCIES; do echo waiting for the MongoDB; sleep 2; done;"]
+        command: ["sh", "-c", "until nc -z $MONGO; do echo waiting for the MongoDB; sleep 2; done;"]
       containers:
       - name: {{ .name }}
         securityContext:
