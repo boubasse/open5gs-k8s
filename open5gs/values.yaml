@@ -49,11 +49,11 @@ global:
 
   initcontainers:
     curl:
-      registry: towards5gs
+      registry: docker.io/towards5gs
       image: initcurl
       tag: latest
     busybox:
-      image: busybox
+      image: docker.io/busybox
       tag: "1.32.0"
 
 

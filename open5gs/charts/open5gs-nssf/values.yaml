@@ -6,6 +6,7 @@ nssf:
   name: nssf
   replicaCount: 1
   image:
+    registry: docker.io/boubasse
     name: open5gs
     pullPolicy: Always
     tag: nssf

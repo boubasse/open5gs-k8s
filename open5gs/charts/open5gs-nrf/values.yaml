@@ -6,7 +6,7 @@ nrf:
   name: nrf
   replicaCount: 1
   image:
-    registry: boubasse
+    registry: docker.io/boubasse
     name: open5gs
     pullPolicy: Always
     tag: nrf

@@ -7,7 +7,7 @@ upf:
   app: open5gs
   replicaCount: 1
   image:
-    registry: boubasse
+    registry: docker.io/boubasse
     name: open5gs
     pullPolicy: Always
     tag: upf
