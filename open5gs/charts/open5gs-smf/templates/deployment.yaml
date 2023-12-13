@@ -85,5 +85,9 @@ spec:
         projected:
           sources:
           - configMap:
-              name: {{ include "open5gs-smf.fullname" $ }}-configmap
+              items:
+              - key: smf.yaml
+                path: smf.yaml
+              - key: frdi_smf.conf
+                path: frdi_smf.conf
 {{- end }}

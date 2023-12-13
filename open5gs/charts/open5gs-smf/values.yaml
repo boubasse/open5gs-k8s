@@ -10,6 +10,9 @@ smf:
     name: open5gs
     pullPolicy: IfNotPresent
     tag: smf
+  
+  freediameter:
+    enabled: false
 
   podAnnotations: {}
   podLabels: {}

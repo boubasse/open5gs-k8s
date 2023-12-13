@@ -51,5 +51,26 @@ data:
     #    - ::1
     #  ctf:
     #    enabled: auto   # auto(default)|yes|no
-      freeDiameter: {{ $.Values.global.basedir }}/freeDiameter/smf.conf
+      {{- if freediameter.enabled }}
+      freeDiameter: {{ $.Values.global.basedir }}/etc/fr_di_smf.conf
+      {{- end }}
+
+  frdi_smf.conf: |
+    Identity = "smf.localdomain";
+    Realm = "localdomain";
+    ListenOn = "127.0.0.4";
+
+    TLS_Cred = "{{ $.Values.global.basedir }}/tls/smf.crt", "{{ $.Values.global.basedir }}/tls/smf.key";
+    TLS_CA = "{{ $.Values.global.basedir }}/tls/ca.crt";
+    NoRelay;
+
+    LoadExtension = "@libdir@/freeDiameter/dbg_msg_dumps.fdx" : "0x8888";
+    LoadExtension = "@libdir@/freeDiameter/dict_rfc5777.fdx";
+    LoadExtension = "@libdir@/freeDiameter/dict_mip6i.fdx";
+    LoadExtension = "@libdir@/freeDiameter/dict_nasreq.fdx";
+    LoadExtension = "@libdir@/freeDiameter/dict_nas_mipv6.fdx";
+    LoadExtension = "@libdir@/freeDiameter/dict_dcca.fdx";
+    LoadExtension = "@libdir@/freeDiameter/dict_dcca_3gpp.fdx";
+
+    ConnectPeer = "pcrf.localdomain" { ConnectTo = "127.0.0.9"; No_TLS; };
 {{- end }}
