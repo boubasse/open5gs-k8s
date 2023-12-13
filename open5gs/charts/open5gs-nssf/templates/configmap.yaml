@@ -24,4 +24,8 @@ data:
     #        - uri: http://127.0.0.10:7777
           scp:
             - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+          nsi:
+            - uri: http://{{ $.Values.global.nrf.service.name }}:{{ $.Values.global.nrf.service.port }}
+              s_nssai:
+                sst: 1
 {{- end }}

@@ -48,7 +48,7 @@ spec:
           containerPort: {{ .service.port }}
         resources:
           {{- toYaml .resources | nindent 12 }}
-        command: ["npm run dev"]
+        #command: ["npm run dev"]
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       nodeSelector:

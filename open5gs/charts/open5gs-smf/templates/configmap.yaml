@@ -51,5 +51,5 @@ data:
     #    - ::1
     #  ctf:
     #    enabled: auto   # auto(default)|yes|no
-      freeDiameter: {{ $.Values.global.basedir }}/freeDiameter/smf.conf
+      freeDiameter: {{ $.Values.global.basedir }}/smf.conf
 {{- end }}
