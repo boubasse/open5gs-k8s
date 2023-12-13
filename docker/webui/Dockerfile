@@ -8,3 +8,4 @@ COPY --from=builder /open5gs/webui ./webui
 WORKDIR /webui
 
 RUN npm ci
+CMD [ "npm run dev" ]
