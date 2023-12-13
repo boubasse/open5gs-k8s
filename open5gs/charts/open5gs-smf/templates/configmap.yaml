@@ -51,7 +51,7 @@ data:
     #    - ::1
     #  ctf:
     #    enabled: auto   # auto(default)|yes|no
-      {{- if freediameter.enabled }}
+      {{- if .freediameter.enabled }}
       freeDiameter: {{ $.Values.global.basedir }}/etc/fr_di_smf.conf
       {{- end }}
 
