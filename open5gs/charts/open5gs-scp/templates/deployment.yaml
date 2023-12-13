@@ -29,6 +29,7 @@ spec:
         {{- with $.Values.global.initcontainers.curl }}
         image: {{ .registry }}/{{ .image }}:{{ .tag }}
         {{- end }}
+        imagePullPolicy: {{ .image.pullPolicy }}
         env:
         - name: URIS
           value: http://{{ $.Values.global.nrf.service.name }}:{{ $.Values.global.nrf.service.port }}
