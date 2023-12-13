@@ -19,7 +19,7 @@ deployWebui: true
 
 global:
   name: open5gs
-  basedir: /open5gs/install/etc
+  basedir: /open5gs/install
   sbi:
     port: 8000
   amf:
@@ -128,52 +128,3 @@ global:
     cidr: 29
     gatewayIP: 10.100.50.230
     excludeIP: 10.100.50.230
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-mongodb:
-  fullnameOverride: "mongodb"
-  useStatefulSet: true
-  auth:
-    enabled: false
-  persistence:
-    size: 6Gi
-    mountPath: /bitnami/mongodb/data/db/
-  service:
-    name: mongodb
-    type: ClusterIP
-    port: 27017
