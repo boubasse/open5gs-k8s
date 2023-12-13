@@ -25,8 +25,9 @@ spec:
       initContainers:
       - name: wait-mongo
         {{- with $.Values.global.initcontainers.busybox }}
-        image: {{ .image }}:{{ .tag }}
+        image: {{ .registry }}/{{ .image }}:{{ .tag }}
         {{- end }}
+        imagePullPolicy: {{ .image.pullPolicy }}
         env:
         - name: MONGO
           value: {{ $.Values.global.mongodb.service.name }}:{{ $.Values.global.mongodb.service.port }}

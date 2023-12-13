@@ -9,7 +9,7 @@ upf:
   image:
     registry: docker.io/boubasse
     name: open5gs
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     tag: upf
   
   n4ip: 10.100.50.241

@@ -53,7 +53,8 @@ global:
       image: initcurl
       tag: latest
     busybox:
-      image: docker.io/busybox
+      registry: docker.io
+      image: busybox
       tag: "1.32.0"
 
 

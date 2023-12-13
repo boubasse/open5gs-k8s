@@ -8,7 +8,7 @@ ausf:
   image:
     registry: docker.io/boubasse
     name: open5gs
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     tag: ausf
 
   podAnnotations: {}
