@@ -8,7 +8,7 @@ smf:
   image:
     registry: docker.io/boubasse
     name: open5gs
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     tag: smf
 
   podAnnotations: {}
