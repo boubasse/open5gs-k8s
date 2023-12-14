@@ -22,7 +22,8 @@ data:
       sbi:
         server:
           - address: 0.0.0.0
-            port: {{ .service.port }}
+            port: {{ $.Values.global.nrf.service.port }}
+            advertise: {{ $.Values.global.nrf.service.name }}
         client:
     #      nrf:
     #        - uri: http://127.0.0.10:7777

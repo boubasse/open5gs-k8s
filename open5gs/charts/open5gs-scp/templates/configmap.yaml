@@ -18,7 +18,8 @@ data:
       sbi:
         server:
           - address: 0.0.0.0
-            port: {{ .service.port }}
+            port: {{ $.Values.global.scp.service.port }}
+            advertise: {{ $.Values.global.scp.service.name }}
         client:
          nrf:
            - uri: http://{{ $.Values.global.nrf.service.name }}:{{ $.Values.global.nrf.service.port }}
