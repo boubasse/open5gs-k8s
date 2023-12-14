@@ -49,7 +49,7 @@ spec:
         livenessProbe:
           # Using tcpSocket instead of httpGet because open5gs only support HTTP/2
             tcpSocket:
-              port: nsf-sbi
+              port: bsf-sbi
             initialDelaySeconds: {{ .livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .livenessProbe.timeoutSeconds }}
@@ -60,7 +60,7 @@ spec:
         readinessProbe:
         # Using tcpSocket instead of httpGet because open5gs only support HTTP/2
           tcpSocket:
-            port: nsf-sbi
+            port: bsf-sbi
           initialDelaySeconds: {{ .readinessProbe.initialDelaySeconds }}
           periodSeconds: {{ .readinessProbe.periodSeconds }}
           timeoutSeconds: {{ .readinessProbe.timeoutSeconds }}
