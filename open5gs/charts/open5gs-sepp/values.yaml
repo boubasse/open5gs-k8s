@@ -18,7 +18,11 @@ sepp:
   service:
     name: sepp-sbi
     type: ClusterIP
-    port: 80
+    port: 7777
+  sbinet:
+    enabled: false
+    ip: 10.100.50.136
+    port: 7777
   ingress:
     enabled: false
     className: ""

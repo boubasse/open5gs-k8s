@@ -15,6 +15,11 @@ spec:
   template:
     metadata:
       annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+              { "name": "{{ $.Values.global.sbinetwork.name }}-{{ include "open5gs-nssf.fullname" $ }}",
+                "interface": "sbi",
+                "ips": [ "{{ .sbinet.ip }}/{{ $.Values.global.sbinetwork.cidr }}" ]
+              }]'
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
       labels:
         {{- include "open5gs-nssf.labels" $ | nindent 8 }}
@@ -32,7 +37,7 @@ spec:
         imagePullPolicy: {{ .image.pullPolicy }}
         env:
         - name: URIS
-          value: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+          value: http://{{ $.Values.global.scp.sbinet.ip }}:{{ $.Values.global.scp.sbinet.port }}
         command: ['sh', '-c', 'set -x; for uri in $URIS; do while [ $(curl --insecure --connect-timeout 1 -s -o /dev/null -w "%{http_code}" $uri --http2-prior-knowledge) -ne 500 ]; do echo waiting for scp; sleep 1; done; done;']
       containers:
       - name: {{ .name }}
@@ -42,7 +47,7 @@ spec:
         imagePullPolicy: {{ .image.pullPolicy }}
         ports:
         - name: nssf-sbi
-          containerPort: {{ .service.port }}
+          containerPort: {{ .sbinet.port }}
         resources:
           {{- toYaml .resources | nindent 12 }}
         {{- if .livenessProbe.enabled }}

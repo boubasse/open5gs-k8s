@@ -23,6 +23,10 @@ spec:
             { "name": "{{ $.Values.global.n4unetwork.name }}-{{ include "open5gs-smf.fullname" $ }}",
               "interface": "n4u",
               "ips": [ "{{ $.Values.global.smf.n4uip }}/{{ $.Values.global.n4unetwork.cidr }}" ]
+            },
+            { "name": "{{ $.Values.global.sbinetwork.name }}-{{ include "open5gs-smf.fullname" $ }}",
+              "interface": "sbi",
+              "ips": [ "{{ .sbinet.ip }}/{{ $.Values.global.sbinetwork.cidr }}" ]
             }]'
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
       labels:
@@ -41,7 +45,7 @@ spec:
         imagePullPolicy: {{ .image.pullPolicy }}
         env:
         - name: URIS
-          value: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+          value: http://{{ $.Values.global.scp.sbinet.ip }}:{{ $.Values.global.scp.sbinet.port }}
         command: ['sh', '-c', 'set -x; for uri in $URIS; do while [ $(curl --insecure --connect-timeout 1 -s -o /dev/null -w "%{http_code}" $uri --http2-prior-knowledge) -ne 500 ]; do echo waiting for scp; sleep 1; done; done;']
       containers:
       - name: {{ .name }}
@@ -51,7 +55,7 @@ spec:
         imagePullPolicy: {{ .image.pullPolicy }}
         ports:
         - name: smf-sbi
-          containerPort: {{ .service.port }}
+          containerPort: {{ .sbinet.port }}
         - name: n4
           containerPort: 8805
         - name: n4u

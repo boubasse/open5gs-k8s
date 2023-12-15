@@ -1,0 +1,40 @@
+{{- with .Values.sepp }}
+{{- if  .sbinet.enabled}}
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: {{ $.Values.global.sbinetwork.name }}-{{ include "open5gs-sepp.fullname" $ }}
+spec:
+  config: '{
+      "cniVersion": "0.3.1",
+      "plugins": [
+        {
+          "type": {{ $.Values.global.sbinetwork.type | quote }},
+          "capabilities": { "ips": true },
+          "master": {{ $.Values.global.sbinetwork.masterIf | quote }},
+{{- if eq $.Values.global.sbinetwork.type "macvlan" }}
+          "mode": "bridge",
+{{- end }}
+{{- if eq $.Values.global.sbinetwork.type "ipvlan" }}
+          "mode": "l2",
+{{- end }}
+          "ipam": {
+            "type": "static",
+            "routes": [
+              {
+                "dst": "0.0.0.0/0",
+                "gw": "{{ $.Values.global.sbinetwork.gatewayIP }}"
+              }
+            ]
+          }
+        }
+{{- if eq $.Values.global.sbinetwork.type "macvlan" -}}
+        , {
+          "capabilities": { "mac": true },
+          "type": "tuning"
+        }
+{{- end }}
+      ]
+    }'
+{{- end }}
+{{- end }}

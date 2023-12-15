@@ -16,9 +16,14 @@ scp:
   podSecurityContext: {}
   securityContext: {}
   service:
+    enabled: false
     name: scp-sbi
     type: ClusterIP
-    port: 8000
+    port: 7777
+  sbinet:
+    enabled: true
+    ip: 10.100.50.135
+    port: 7777
   ingress:
     enabled: false
     className: ""

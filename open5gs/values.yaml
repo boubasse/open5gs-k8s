@@ -30,11 +30,20 @@ global:
       name: nrf-sbi
       type: ClusterIP
       port: 8000
+    sbinet:
+      enabled: true
+      ip: 10.100.50.132
+      port: 7777
   scp:
     service:
       name: scp-sbi
       type: ClusterIP
       port: 8000
+    sbinet:
+      enabled: true
+      ip: 10.100.50.135
+      port: 7777
+    
   smf:
     n4ip: 10.100.50.244
     n4uip: 10.100.50.234
@@ -74,6 +83,15 @@ global:
   db_uri: mongodb://mongodb/open5gs
 
   ## Networks inside the CN
+  sbinetwork:
+    enabled: true
+    name: sbinetwork
+    type: ipvlan
+    masterIf: ens18
+    subnetIP: 10.200.50.128
+    cidr: 27
+    gatewayIP: 10.200.50.158
+    excludeIP: 10.200.50.158
   n2network:
     enabled: true
     name: n2network

@@ -16,9 +16,14 @@ amf:
   podSecurityContext: {}
   securityContext: {}
   service:
+    enabled: false
     name: amf-sbi
     type: ClusterIP
     port: 80
+  sbinet:
+    enabled: true
+    ip: 10.100.50.129
+    port: 7777
   ingress:
     enabled: false
     className: ""

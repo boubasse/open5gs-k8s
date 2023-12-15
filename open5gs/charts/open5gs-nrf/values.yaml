@@ -16,9 +16,14 @@ nrf:
   podSecurityContext: {}
   securityContext: {}
   service:
+    enabled: false
     name: nrf-sbi
     type: ClusterIP
-    port: 8000
+    port: 7777
+  sbinet:
+    enabled: true
+    ip: 10.100.50.132
+    port: 7777
   ingress:
     enabled: false
     className: ""
