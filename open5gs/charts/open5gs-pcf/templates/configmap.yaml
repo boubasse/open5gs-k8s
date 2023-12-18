@@ -20,7 +20,6 @@ data:
         server:
           - address: {{ .sbinet.ip }}
             port: {{ .sbinet.port }}
-            advertise: {{ include "open5gs-pcf.fullname" $ }}-sbi
         client:
     #      nrf:
     #        - uri: http://127.0.0.10:7777

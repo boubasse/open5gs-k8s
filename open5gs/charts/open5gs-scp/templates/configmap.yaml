@@ -18,8 +18,7 @@ data:
       sbi:
         server:
           - address: {{ .sbinet.ip }}
-            port: {{ $.Values.global.scp.sbinet.port }}
-            advertise: {{ $.Values.global.scp.sbinet.ip }}
+            port: {{ .sbinet.port }}
         client:
          nrf:
            - uri: http://{{ $.Values.global.nrf.sbinet.ip }}:{{ $.Values.global.nrf.sbinet.port }}
