@@ -1,5 +1,5 @@
 {{- with .Values.nrf}}
-{{- if .sbinet.enabled}}
+{{- if .service.enabled}}
 apiVersion: v1
 kind: Service
 metadata:
