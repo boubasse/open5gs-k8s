@@ -37,7 +37,7 @@ spec:
         imagePullPolicy: {{ .image.pullPolicy }}
         env:
         - name: URIS
-          value: http://{{ $.Values.global.nrf.service.name }}:{{ $.Values.global.nrf.sbinet.port }}
+          value: http://{{ $.Values.global.nrf.sbinet.ip }}:{{ $.Values.global.nrf.sbinet.port }}
         command: ['sh', '-c', 'set -x; for uri in $URIS; do while [ $(curl --insecure --connect-timeout 1 -s -o /dev/null -w "%{http_code}" $uri --http2-prior-knowledge) -ne 400 ]; do echo waiting for scp; sleep 1; done; done;']
       containers:
       - name: {{ .name }}
