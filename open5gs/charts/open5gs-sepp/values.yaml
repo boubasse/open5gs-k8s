@@ -16,11 +16,12 @@ sepp:
   podSecurityContext: {}
   securityContext: {}
   service:
+    enabled: false
     name: sepp-sbi
     type: ClusterIP
     port: 7777
   sbinet:
-    enabled: false
+    enabled: true
     ip: 10.200.50.136
     port: 7777
   ingress:
@@ -56,7 +57,8 @@ sepp:
     # targetMemoryUtilizationPercentage: 80
 
   volumeMounts:
-    mountPath: "/open5gs/install/etc/"
+    confPath: "/open5gs/install/etc"
+    logPath: "/open5gs/install/log"
   
   logger:
     file: /open5gs/install/log/sepp.log

@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ $.Values.global.name }}
 data:
-  sepp.yaml: |
+  sepph.yaml: |
     logger:
       {{- toYaml .logger | nindent 8 }}
     global:
@@ -16,12 +16,12 @@ data:
 
     sepp:
       default:
-      tls:
-        server:
-          private_key: {{ $.Values.global.basedir }}/tls/sepp1.key
-          cert: {{ $.Values.global.basedir }}/tls/sepp1.crt
-        client:
-          cacert: {{ $.Values.global.basedir }}/tls/ca.crt
+        tls:
+          server:
+            private_key: {{ $.Values.global.basedir }}/tls/sepp1.key
+            cert: {{ $.Values.global.basedir }}/tls/sepp1.crt
+          client:
+            cacert: {{ $.Values.global.basedir }}/tls/ca.crt
       sbi:
         server:
           - address: {{ .sbinet.ip }}
@@ -34,20 +34,20 @@ data:
             - uri: http://{{ $.Values.global.scp.sbinet.ip }}:{{ $.Values.global.scp.sbinet.port }}
       n32:
         server:
-          - sender: sepp1.localdomain
+          - sender: sepph.localdomain
             scheme: https
-            address: 127.0.1.251
-            port: 7777
-            n32f:
-              scheme: https
-              address: 127.0.1.252
-              port: 7777
-        client:
-          sepp:
-            - receiver: sepp2.localdomain
-              uri: https://sepp2.localdomain:7777
-              resolve: 127.0.2.251
-              n32f:
-                uri: https://sepp2.localdomain:7777
-                resolve: 127.0.2.252
+            address: 127.0.0.1
+            port: 7070
+            # n32f:
+            #   scheme: https
+            #   address: 127.0.1.252
+            #   port: 7777
+        # client:
+        #   sepp:
+        #     - receiver: sepp2.localdomain
+        #       uri: https://sepp2.localdomain:7777
+        #       resolve: 127.0.2.251
+        #       n32f:
+        #         uri: https://sepp2.localdomain:7777
+        #         resolve: 127.0.2.252
 {{- end }}

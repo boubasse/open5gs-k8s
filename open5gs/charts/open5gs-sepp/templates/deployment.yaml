@@ -48,6 +48,8 @@ spec:
         ports:
         - name: sepp-sbi
           containerPort: {{ .sbinet.port }}
+        - name: n32
+          containerPort: 7070
         resources:
           {{- toYaml .resources | nindent 12 }}
         volumeMounts:
@@ -56,7 +58,7 @@ spec:
         - mountPath: {{ .volumeMounts.logPath }}
           name: {{ include "open5gs-sepp.fullname" $ }}-log-volume
         command: ["./open5gs-seppd"]
-        args: ["-c", "../etc/sepp.yaml"]
+        args: ["-c", "../etc/sepph.yaml"]
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       nodeSelector:
