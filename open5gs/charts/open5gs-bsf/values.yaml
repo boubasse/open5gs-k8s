@@ -46,7 +46,7 @@ bsf:
       memory: 128Mi
   
   livenessProbe:
-    enabled: true
+    enabled: false
     initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
@@ -54,7 +54,7 @@ bsf:
     successThreshold: 1
   
   readinessProbe:
-    enabled: true
+    enabled: false
     initialDelaySeconds: 30
     periodSeconds: 5
     timeoutSeconds: 1
