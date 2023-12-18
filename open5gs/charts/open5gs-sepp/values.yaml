@@ -21,7 +21,7 @@ sepp:
     port: 7777
   sbinet:
     enabled: false
-    ip: 10.100.50.136
+    ip: 10.200.50.136
     port: 7777
   ingress:
     enabled: false

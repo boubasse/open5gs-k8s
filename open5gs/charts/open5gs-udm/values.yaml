@@ -22,7 +22,7 @@ udm:
     port: 7777
   sbinet:
     enabled: true
-    ip: 10.100.50.138
+    ip: 10.200.50.138
     port: 7777
   ingress:
     enabled: false

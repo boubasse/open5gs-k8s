@@ -22,7 +22,7 @@ scp:
     port: 7777
   sbinet:
     enabled: true
-    ip: 10.100.50.135
+    ip: 10.200.50.135
     port: 7777
   ingress:
     enabled: false
