@@ -18,7 +18,7 @@ nrf:
   service:
     name: nrf-sbi
     type: ClusterIP
-    port: 777700
+    port: 7777
   ingress:
     enabled: false
     className: ""
