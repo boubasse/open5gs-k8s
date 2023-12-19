@@ -21,7 +21,7 @@ global:
   name: open5gs
   basedir: /open5gs/install
   sbi:
-    port: 8000
+    port: 7777
   amf:
     n2ip: 10.1.1.3
     n2port: 38412
@@ -29,12 +29,12 @@ global:
     service:
       name: nrf-sbi
       type: ClusterIP
-      port: 8000
+      port: 7777
   scp:
     service:
       name: scp-sbi
       type: ClusterIP
-      port: 8000
+      port: 7777
   smf:
     n4ip: 10.100.50.244
     n4uip: 10.100.50.234

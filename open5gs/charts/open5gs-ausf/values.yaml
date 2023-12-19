@@ -18,7 +18,7 @@ ausf:
   service:
     name: ausf-sbi
     type: ClusterIP
-    port: 80
+    port: 7777
   ingress:
     enabled: false
     className: ""
