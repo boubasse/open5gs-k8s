@@ -39,6 +39,22 @@ sepp:
     requests:
       cpu: 100m
       memory: 128Mi
+  
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 120
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 5
+    successThreshold: 1
+  
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 30
+    periodSeconds: 5
+    timeoutSeconds: 1
+    failureThreshold: 5
+    successThreshold: 1
 
   nodeSelector: {}
   tolerations: []
@@ -52,7 +68,8 @@ sepp:
     # targetMemoryUtilizationPercentage: 80
 
   volumeMounts:
-    mountPath: "/open5gs/install/etc/"
+    confPath: "/open5gs/install/etc"
+    logPath: "/open5gs/install/log"
   
   logger:
     file: /open5gs/install/log/sepp.log
