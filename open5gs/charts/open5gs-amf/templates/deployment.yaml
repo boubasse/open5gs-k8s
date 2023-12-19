@@ -20,7 +20,7 @@ spec:
               "interface": "n2",
               "ips": [ "{{ $.Values.global.amf.n2ip }}/{{ $.Values.global.n2network.cidr }}" ]
             },
-            { "name": "{{ $.Values.global.sbinetwork.name }}-{{ include "open5gs-amf.fullname" $ }}",
+            { "name": "{{ $.Values.global.sbinetwork.name }}",
               "interface": "sbi",
               "ips": [ "{{ .sbinet.ip }}/{{ $.Values.global.sbinetwork.cidr }}" ]
             }]'

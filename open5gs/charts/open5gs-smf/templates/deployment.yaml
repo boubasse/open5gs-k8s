@@ -24,7 +24,7 @@ spec:
               "interface": "n4u",
               "ips": [ "{{ $.Values.global.smf.n4uip }}/{{ $.Values.global.n4unetwork.cidr }}" ]
             },
-            { "name": "{{ $.Values.global.sbinetwork.name }}-{{ include "open5gs-smf.fullname" $ }}",
+            { "name": "{{ $.Values.global.sbinetwork.name }}",
               "interface": "sbi",
               "ips": [ "{{ .sbinet.ip }}/{{ $.Values.global.sbinetwork.cidr }}" ]
             }]'

@@ -16,7 +16,7 @@ spec:
     metadata:
       annotations:
         k8s.v1.cni.cncf.io/networks: '[
-              { "name": "{{ $.Values.global.sbinetwork.name }}-{{ include "open5gs-pcf.fullname" $ }}",
+              { "name": "{{ $.Values.global.sbinetwork.name }}",
                 "interface": "sbi",
                 "ips": [ "{{ .sbinet.ip }}/{{ $.Values.global.sbinetwork.cidr }}" ]
               }]'

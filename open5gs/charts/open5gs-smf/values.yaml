@@ -24,7 +24,7 @@ smf:
     type: ClusterIP
     port: 7777
   sbinet:
-    enabled: true
+    enabled: false
     ip: 10.200.50.137
     port: 7777
   ingress:
