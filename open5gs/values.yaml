@@ -10,7 +10,7 @@ deployNrf: true
 deployNssf: true
 deployPcf: true
 deployScp: true
-deploySepp: true
+deploySepp: false
 deploySmf: true
 deployUdm: true
 deployUdr: true
