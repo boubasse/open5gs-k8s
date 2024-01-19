@@ -15,7 +15,7 @@ data:
     #    peer: 64
 
     scp:
-      no_sepp: true
+      # no_sepp: true
       sbi:
         server:
           - address: {{ .sbinet.ip }}

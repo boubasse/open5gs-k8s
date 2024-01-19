@@ -15,10 +15,10 @@ data:
     #    peer: 64
 
     nrf:
-      # serving:  # 5G roaming requires PLMN in NRF
-      #   - plmn_id:
-      #       mcc: 999
-      #       mnc: 70
+      serving:  # 5G roaming requires PLMN in NRF
+        - plmn_id:
+            mcc: 208
+            mnc: 93
       sbi:
         server:
           - address: {{ .sbinet.ip }}

@@ -14,7 +14,10 @@ amf:
   podAnnotations: {}
   podLabels: {}
   podSecurityContext: {}
-  securityContext: {}
+  securityContext:
+    privileged: true
+    capabilities:
+        add: ["NET_ADMIN", "NET_RAW"]
   service:
     enabled: false
     name: amf-sbi
