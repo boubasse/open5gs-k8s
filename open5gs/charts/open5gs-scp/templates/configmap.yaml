@@ -15,12 +15,12 @@ data:
     #    peer: 64
 
     scp:
+      # no_sepp: true
       sbi:
         server:
-          - address: 0.0.0.0
-            port: {{ $.Values.global.scp.service.port }}
-            advertise: {{ $.Values.global.scp.service.name }}
+          - address: {{ .sbinet.ip }}
+            port: {{ .sbinet.port }}
         client:
          nrf:
-           - uri: http://{{ $.Values.global.nrf.service.name }}:{{ $.Values.global.nrf.service.port }}
+           - uri: http://{{ $.Values.global.nrf.sbinet.ip }}:{{ $.Values.global.nrf.sbinet.port }}
 {{- end }}

@@ -24,20 +24,20 @@ data:
             cacert: {{ $.Values.global.basedir }}/tls/ca.crt
       sbi:
         server:
-          - address: 0.0.0.0
-            port: {{ .service.port }}
-            advertise: {{ include "open5gs-sepp.fullname" $ }}-sbi
+          - address: {{ .sbinet.ip }}
+            port: {{ .sbinet.port }}
         client:
     #      nrf:
     #        - uri: http://127.0.0.10:7777
           scp:
-            - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+            - uri: http://{{ $.Values.global.scp.sbinet.ip }}:{{ $.Values.global.scp.sbinet.port }}
       n32:
         server:
-          - sender: sepp1.localdomain
+          - sender: sepph.localdomain
             scheme: https
             address: 127.0.0.1
             port: 7070
+
         #     n32f:
         #       scheme: https
         #       address: 127.0.1.252

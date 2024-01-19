@@ -18,12 +18,11 @@ data:
     udr:
       sbi:
         server:
-          - address: 0.0.0.0
-            port: {{ .service.port }}
-            advertise: {{ include "open5gs-udr.fullname" $ }}-sbi
+          - address: {{ .sbinet.ip }}
+            port: {{ .sbinet.port }}
         client:
     #      nrf:
     #        - uri: http://127.0.0.10:7777
           scp:
-            - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+            - uri: http://{{ $.Values.global.scp.sbinet.ip }}:{{ $.Values.global.scp.sbinet.port }}
 {{- end }}

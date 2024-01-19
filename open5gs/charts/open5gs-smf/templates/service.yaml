@@ -1,4 +1,5 @@
 {{- with .Values.smf}}
+{{- if .service.enabled}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,4 +15,5 @@ spec:
       name: http
   selector:
     {{- include "open5gs-smf.selectorLabels" $ | nindent 4 }}
+{{- end}}
 {{- end}}

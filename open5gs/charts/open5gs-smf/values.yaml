@@ -19,8 +19,13 @@ smf:
   podSecurityContext: {}
   securityContext: {}
   service:
+    enabled: false
     name: smf-sbi
     type: ClusterIP
+    port: 7777
+  sbinet:
+    enabled: false
+    ip: 10.200.50.137
     port: 7777
   ingress:
     enabled: false
@@ -44,7 +49,7 @@ smf:
       memory: 128Mi
   
   livenessProbe:
-    enabled: true
+    enabled: false
     initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
@@ -52,7 +57,7 @@ smf:
     successThreshold: 1
   
   readinessProbe:
-    enabled: true
+    enabled: false
     initialDelaySeconds: 30
     periodSeconds: 5
     timeoutSeconds: 1

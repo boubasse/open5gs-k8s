@@ -17,14 +17,13 @@ data:
     amf:
       sbi:
         server:
-          - address: 0.0.0.0
-            port: {{ .service.port }}
-            advertise: {{ include "open5gs-amf.fullname" $ }}-sbi
+          - address: {{ .sbinet.ip }}
+            port: {{ .sbinet.port }}
         client:
     #      nrf:
     #        - uri: http://127.0.0.10:7777
           scp:
-            - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+            - uri: http://{{ $.Values.global.scp.sbinet.ip }}:{{ $.Values.global.scp.sbinet.port }}
       ngap:
         server:
           - address: {{ $.Values.global.amf.n2ip }}
@@ -34,20 +33,20 @@ data:
       #       port: 9090
       guami:
         - plmn_id:
-            mcc: 999
-            mnc: 70
+            mcc: 208
+            mnc: 93
           amf_id:
             region: 2
             set: 1
       tai:
         - plmn_id:
-            mcc: 999
-            mnc: 70
+            mcc: 208
+            mnc: 93
           tac: 1
       plmn_support:
         - plmn_id:
-            mcc: 999
-            mnc: 70
+            mcc: 208
+            mnc: 93
           s_nssai:
             - sst: 1
       security:

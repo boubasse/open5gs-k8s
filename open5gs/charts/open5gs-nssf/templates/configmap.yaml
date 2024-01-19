@@ -17,16 +17,15 @@ data:
     nssf:
       sbi:
         server:
-          - address: 0.0.0.0
-            port: {{ .service.port }}
-            advertise: {{ include "open5gs-nssf.fullname" $ }}-sbi
+          - address: {{ .sbinet.ip }}
+            port: {{ .sbinet.port }}
         client:
     #      nrf:
     #        - uri: http://127.0.0.10:7777
           scp:
-            - uri: http://{{ $.Values.global.scp.service.name }}:{{ $.Values.global.scp.service.port }}
+            - uri: http://{{ $.Values.global.scp.sbinet.ip }}:{{ $.Values.global.scp.sbinet.port }}
           nsi:
-            - uri: http://{{ $.Values.global.nrf.service.name }}:{{ $.Values.global.nrf.service.port }}
+            - uri: http://{{ $.Values.global.nrf.sbinet.ip }}:{{ $.Values.global.nrf.sbinet.port }}
               s_nssai:
                 sst: 1
 {{- end }}

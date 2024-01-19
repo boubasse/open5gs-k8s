@@ -16,8 +16,13 @@ sepp:
   podSecurityContext: {}
   securityContext: {}
   service:
+    enabled: false
     name: sepp-sbi
     type: ClusterIP
+    port: 7777
+  sbinet:
+    enabled: false
+    ip: 10.200.50.136
     port: 7777
   ingress:
     enabled: false

@@ -15,6 +15,11 @@ spec:
   template:
     metadata:
       annotations:
+        k8s.v1.cni.cncf.io/networks: '[
+              { "name": "{{ $.Values.global.sbinetwork.name }}",
+                "interface": "sbi",
+                "ips": [ "{{ .sbinet.ip }}/{{ $.Values.global.sbinetwork.cidr }}" ]
+              }]'
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
       labels:
         {{- include "open5gs-nrf.labels" $ | nindent 8 }}
@@ -42,7 +47,7 @@ spec:
         imagePullPolicy: {{ .image.pullPolicy }}
         ports:
         - name: nrf-sbi
-          containerPort: {{ .service.port }}
+          containerPort: {{ .sbinet.port }}
         resources:
           {{- toYaml .resources | nindent 12 }}
         {{- if .livenessProbe.enabled }}

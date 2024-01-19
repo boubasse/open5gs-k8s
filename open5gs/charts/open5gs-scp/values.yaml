@@ -14,10 +14,18 @@ scp:
   podAnnotations: {}
   podLabels: {}
   podSecurityContext: {}
-  securityContext: {}
+  securityContext:
+    privileged: true
+    capabilities:
+        add: ["NET_ADMIN", "NET_RAW"]
   service:
+    enabled: false
     name: scp-sbi
     type: ClusterIP
+    port: 7777
+  sbinet:
+    enabled: false
+    ip: 10.200.50.135
     port: 7777
   ingress:
     enabled: false
@@ -41,7 +49,7 @@ scp:
       memory: 128Mi
   
   livenessProbe:
-    enabled: true
+    enabled: false
     initialDelaySeconds: 120
     periodSeconds: 10
     timeoutSeconds: 5
@@ -49,7 +57,7 @@ scp:
     successThreshold: 1
   
   readinessProbe:
-    enabled: true
+    enabled: false
     initialDelaySeconds: 30
     periodSeconds: 5
     timeoutSeconds: 1
