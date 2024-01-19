@@ -52,6 +52,28 @@ spec:
           containerPort: 7070
         resources:
           {{- toYaml .resources | nindent 12 }}
+        {{- if .livenessProbe.enabled }}
+        livenessProbe:
+          # Using tcpSocket instead of httpGet because open5gs only support HTTP/2
+            tcpSocket:
+              port: sepp-sbi
+            initialDelaySeconds: {{ .livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .livenessProbe.successThreshold }}
+            failureThreshold: {{ .livenessProbe.failureThreshold }}
+        {{- end }}
+        {{- if .readinessProbe.enabled }}
+        readinessProbe:
+        # Using tcpSocket instead of httpGet because open5gs only support HTTP/2
+          tcpSocket:
+            port: sepp-sbi
+          initialDelaySeconds: {{ .readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .readinessProbe.timeoutSeconds }}
+          successThreshold: {{ .readinessProbe.successThreshold }}
+          failureThreshold: {{ .readinessProbe.failureThreshold }}
+        {{- end }}
         volumeMounts:
         - mountPath: {{ .volumeMounts.confPath }}
           name: {{ include "open5gs-sepp.fullname" $ }}-conf-volume

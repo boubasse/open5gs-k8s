@@ -37,10 +37,11 @@ data:
             scheme: https
             address: 127.0.0.1
             port: 7070
-            # n32f:
-            #   scheme: https
-            #   address: 127.0.1.252
-            #   port: 7777
+
+        #     n32f:
+        #       scheme: https
+        #       address: 127.0.1.252
+        #       port: 7777
         # client:
         #   sepp:
         #     - receiver: sepp2.localdomain
