@@ -1,4 +1,4 @@
-{{- if  $.Values.global.n4network.enabled}}
+{{- if $.Values.global.n4network.enabled}}
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
@@ -10,7 +10,12 @@ spec:
         {
           "type": {{ $.Values.global.n4network.type | quote }},
           "capabilities": { "ips": true },
+{{- if eq .Values.global.n4network.type "ipvlan" }}
           "master": {{ $.Values.global.n4network.masterIf | quote }},
+{{- end }}
+{{- if eq $.Values.global.n4network.type "host-device" }}
+          "device": {{ $.Values.global.n4network.masterIf | quote }},
+{{- end }}
 {{- if eq $.Values.global.n4network.type "macvlan" }}
           "mode": "bridge",
 {{- end }}
@@ -18,13 +23,7 @@ spec:
           "mode": "l2",
 {{- end }}
           "ipam": {
-            "type": "static",
-            "routes": [
-              {
-                "dst": "0.0.0.0/0",
-                "gw": "{{ $.Values.global.n4network.gatewayIP }}"
-              }
-            ]
+            "type": "static"
           }
         }
 {{- if eq $.Values.global.n4network.type "macvlan" -}}
