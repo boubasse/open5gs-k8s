@@ -80,5 +80,6 @@ amf:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/amf.log
+    file: 
+      path: /open5gs/install/log/amf.log
     level: info

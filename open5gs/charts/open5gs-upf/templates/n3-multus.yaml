@@ -24,7 +24,13 @@ spec:
           "mode": "l2",
 {{- end }}
           "ipam": {
-            "type": "static"
+            "type": "static",
+            "routes": [
+              {
+                "dst": "0.0.0.0/0",
+                "gw": "{{ .n3network.gatewayIP }}"
+              }
+            ]
           }
         }
 {{- if eq .n3network.type "macvlan" -}}

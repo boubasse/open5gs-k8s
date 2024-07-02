@@ -17,7 +17,10 @@ smf:
   podAnnotations: {}
   podLabels: {}
   podSecurityContext: {}
-  securityContext: {}
+  securityContext:
+    privileged: true
+    capabilities:
+        add: ["NET_ADMIN", "NET_RAW"]
   service:
     enabled: false
     name: smf-sbi
@@ -80,5 +83,6 @@ smf:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/smf.log
+    file: 
+      path: /open5gs/install/log/smf.log
     level: info

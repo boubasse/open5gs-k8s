@@ -77,5 +77,6 @@ pcf:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/pcf.log
+    file: 
+      path: /open5gs/install/log/pcf.log
     level: info

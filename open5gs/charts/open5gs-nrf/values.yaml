@@ -14,7 +14,10 @@ nrf:
   podAnnotations: {}
   podLabels: {}
   podSecurityContext: {}
-  securityContext: {}
+  securityContext:
+    privileged: true
+    capabilities:
+        add: ["NET_ADMIN", "NET_RAW"]
   service:
     enabled: false
     name: nrf-sbi
@@ -77,5 +80,6 @@ nrf:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/nrf.log
+    file: 
+      path: /open5gs/install/log/nrf.log
     level: info

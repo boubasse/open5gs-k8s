@@ -77,5 +77,6 @@ bsf:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/bsf.log
+    file: 
+      path: /open5gs/install/log/bsf.log
     level: info

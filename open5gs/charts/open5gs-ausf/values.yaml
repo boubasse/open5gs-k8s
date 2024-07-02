@@ -25,7 +25,7 @@ ausf:
     port: 7777
   sbinet:
     enabled: false
-    ip: 10.200.50.130
+    ip: 10.200.50.145
     port: 7777
   ingress:
     enabled: false
@@ -80,5 +80,6 @@ ausf:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/ausf.log
+    file: 
+      path: /open5gs/install/log/ausf.log
     level: info
