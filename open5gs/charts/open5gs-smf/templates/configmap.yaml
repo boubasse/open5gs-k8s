@@ -42,7 +42,7 @@ data:
             port: 9090
       session:
         - subnet: {{ $.Values.global.ue.subnet4 }}
-        - subnet: {{ $.Values.global.ue.subnet6 }}
+          gateway: {{ $.Values.global.ue.gateway4 }}
       dns:
         - 172.16.0.1
       mtu: 1400
