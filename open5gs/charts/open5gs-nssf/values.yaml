@@ -77,5 +77,6 @@ nssf:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/nssf.log
+    file: 
+      path: /open5gs/install/log/nssf.log
     level: info

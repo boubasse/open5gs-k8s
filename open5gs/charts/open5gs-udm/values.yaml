@@ -77,5 +77,6 @@ udm:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/udm.log
+    file: 
+      path: /open5gs/install/log/udm.log
     level: info

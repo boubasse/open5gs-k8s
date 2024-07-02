@@ -80,5 +80,6 @@ scp:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/scp.log
+    file: 
+      path: /open5gs/install/log/scp.log
     level: info

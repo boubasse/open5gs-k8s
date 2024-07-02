@@ -77,5 +77,6 @@ udr:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/udr.log
+    file: 
+      path: /open5gs/install/log/udr.log
     level: info

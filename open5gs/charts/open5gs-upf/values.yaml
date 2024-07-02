@@ -13,13 +13,13 @@ upf:
     tag: upf
   
   n4ip: 10.100.50.241
-  n3ip: 10.1.2.3
+  n3ip: 10.10.10.53
   n6ip: 10.10.30.208
 
   ue:
     max: 1024
-    subnet4: 10.45.0.1/16
-    tun4: 10.45.0.0/16
+    gateway4: 60.61.0.1
+    subnet4: 60.61.0.0/16
     subnet6: 2001:db8:cafe::1/48
   
   n3network:
@@ -27,10 +27,10 @@ upf:
     name: n3network
     type: host-device
     masterIf: ens21
-    subnetIP: 10.1.2.0
+    subnetIP: 10.10.10.0
     cidr: 24
-    gatewayIP: 10.1.2.254
-    excludeIP: 10.1.2.254
+    gatewayIP: 10.10.10.254
+    excludeIP: 10.10.10.254
   n4network:
     enabled: true
     name: n4network
@@ -97,5 +97,6 @@ upf:
     logPath: "/open5gs/install/log"
   
   logger:
-    file: /open5gs/install/log/upf.log
+    file:
+      path: /open5gs/install/log/upf.log
     level: info
