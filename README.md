@@ -63,12 +63,14 @@ sudo swapoff -a
 sudo mount -a
 ```
 
- - Enable br_netfilter
+ - Enable br_netfilter and overlay
 ```shell
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
+overlay
 EOF
-modprobe br_netfilter
+modprobe br_netfilter 
+modprobe overlay
 ```
 
  - IPTables conf and IP fowarding
