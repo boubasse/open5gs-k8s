@@ -25,6 +25,9 @@ global:
   amf:
     n2ip: 10.10.10.63
     n2port: 38412
+    sbinet:
+      ip: 10.200.50.129
+      port: 7777
   nrf:
     service:
       name: nrf-sbi
